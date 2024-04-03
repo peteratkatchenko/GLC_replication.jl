@@ -1,8 +1,22 @@
-module glc_replication
+module main_parameter
 
-clear
+#May have to reposition include() statements for functions depending
+#on their contents in relation to the global variables defined below
+include("fun_saving_pre_trans.jl") 
 
-global bet bet_E r sig alp ksi psi del age_max age_T age_T_w time_max n_pre e_pre w_t m_t rho_t g_n g_t n_weight e_weight nw_pre ee_pre ice_t eta loan_asset
+include("fun_saving_pre_trans_E.jl")
+
+include("fun_saving_E_exis.jl")
+
+include("fun_saving_E_new_born.jl")
+
+import fun_saving_pre_transition 
+
+import fun_saving_pre_transition_E
+
+import fun_saving_E_existing
+
+import fun_saving_E_newly_born
 
 #parameter without calibration
 bet=0.998; #discount factor of workers
@@ -70,17 +84,12 @@ for t=time_ab:time_cd
     ice_t(t)=ice+(t-time_ab)^speed*(ice_t(time_cd)-ice)/(time_cd-time_ab)^speed;
 end
 
-# check parameter values
-disp('Assumption 1: > 0')
-ksi-(1/(1-psi))^(1/(1-alp))
+include("pre_transition.jl")
 
-pre_transition
+include("transition.jl")
 
-# transition
+include("result.jl")
 
+include("six_panel.jl")
 
-
-
-
-
-end # module glc_replication
+end #End of main_parameter module

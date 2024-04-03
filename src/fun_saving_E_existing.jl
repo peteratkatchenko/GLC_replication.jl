@@ -1,5 +1,6 @@
+module fun_saving_E_exis
+
 function fun_saving_E_existing(x)
-    global bet_E r sig alp ksi psi del age_max age_T time_max n_pre e_pre m_t rho_t g_t eta ice_t
 
     # Adjusting rate of return due to the endogenous borrowing constraint
     rho_t_ad = max.(rho_t, (rho_t.*(1+r./(1-ice_t)) .+ eta.*(rho_t - r./(1-ice_t))) ./ (1+r./(1-ice_t) - eta.*(rho_t - r./(1-ice_t))))
@@ -58,3 +59,5 @@ function fun_saving_E_existing(x)
     y = [wealth'; consumption']
     return y
 end
+
+end #End of fun_saving_E_exis module

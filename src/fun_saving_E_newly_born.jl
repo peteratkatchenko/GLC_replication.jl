@@ -1,23 +1,7 @@
+module fun_saving_E_new_born
+
 function fun_saving_E_newly_born(x)
     # Savings of entrepreneurs
-
-    global bet_E::Float64
-    global r::Float64
-    global sig::Float64
-    global alp::Float64
-    global ksi::Float64
-    global psi::Float64
-    global del::Float64
-    global age_max::Int64
-    global age_T::Int64
-    global time_max::Int64
-    global n_pre::Int64
-    global e_pre::Int64
-    global m_t::Vector{Float64}
-    global rho_t::Vector{Float64}
-    global g_t::Float64
-    global eta::Float64
-    global ice_t::Vector{Float64}
 
     # Adjusting rate of return due to the endogenous borrowing constraint
     rho_t_ad = max.(rho_t, (rho_t .* (1 .+ r ./ (1 .- ice_t)) .+ eta .* (rho_t .- r ./ (1 .- ice_t))) ./ (1 .+ r ./ (1 .- ice_t) .- eta .* (rho_t .- r ./ (1 .- ice_t))))
@@ -74,3 +58,5 @@ function fun_saving_E_newly_born(x)
 
     return y
 end
+
+end #End of fun_saving_E_new_born module 

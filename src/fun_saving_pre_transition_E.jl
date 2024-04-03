@@ -1,5 +1,6 @@
+module fun_saving_pre_trans_E
+
 function fun_saving_pre_transition_E(x)
-    global bet_E r sig alp ksi psi del age_max age_T_w time_max n_pre e_pre g_t
 
     # Other definitions
     age = x[1]  # current age
@@ -42,3 +43,5 @@ function fun_saving_pre_transition_E(x)
     y = [savings, wealth_prime, sr, consumption]
     return y
 end
+
+end #End of fun_saving_pre_trans_E module 

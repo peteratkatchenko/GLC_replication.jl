@@ -1,2 +1,25 @@
 # Ignoring all of the data sets in the folder
 
+# Ignoring all of the data sets in the folder
+
+province_panel.dta 
+
+industry_panel.dta 
+
+industry.dta 
+
+gini.dta 
+
+aggregates.dta 
+
+data_0.mat 
+
+data_pre.mat 
+
+data_pre_E.mat 
+
+data_result.mat 
+
+YK_data.mat 
+
+matlab.zip

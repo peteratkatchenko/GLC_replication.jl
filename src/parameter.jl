@@ -1,14 +1,20 @@
 module main_parameter
 
-#May have to reposition include() statements for functions depending
-#on their contents in relation to the global variables defined below
-include("fun_saving_pre_trans.jl") 
+using Statistics 
+using PyPlot
+using MAT
 
-include("fun_saving_pre_trans_E.jl")
+include("fun_saving_pre_transition.jl") 
 
-include("fun_saving_E_exis.jl")
+include("fun_saving_pre_transition_E.jl")
 
-include("fun_saving_E_new_born.jl")
+include("fun_saving_E_existing.jl")
+
+include("fun_saving_E_newly_born.jl")
+
+include("fun_saving_F_existing.jl")
+
+include("fun_saving_F_newly_born.jl")
 
 import fun_saving_pre_transition 
 
@@ -17,6 +23,10 @@ import fun_saving_pre_transition_E
 import fun_saving_E_existing
 
 import fun_saving_E_newly_born
+
+import fun_saving_F_existing 
+
+import fun_saving_F_newly_born
 
 #parameter without calibration
 bet=0.998; #discount factor of workers

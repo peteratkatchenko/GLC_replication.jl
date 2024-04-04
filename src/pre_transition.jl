@@ -13,7 +13,7 @@ for i in 1:age_max
         wealth_pre[i] = 0  # wealth
     end
     x[3] = wealth_pre[i]  # wealth
-    y = fun_saving_pre_transition(x...)
+    y = fun_saving_pre_transition(x)
     sr_pre[i] = y[3, 1]  # saving rate
     consumption_pre[i] = y[4, 1]  # consumption
     if i < age_max
@@ -39,7 +39,7 @@ for i in 1:age_max
         wealth_pre_E[i] = 0  # wealth
     end
     x[3] = wealth_pre_E[i]  # wealth
-    y = fun_saving_pre_transition_E(x...)
+    y = fun_saving_pre_transition_E(x)
     sr_pre_E[i] = y[3, 1]  # saving rate
     consumption_pre_E[i] = y[4, 1]  # consumption
     if i < age_max

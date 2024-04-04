@@ -9,7 +9,7 @@ iter = 1
 # initial_guess
 
 # true results
-data_result = load("data_result.mat")
+data_result = matread("data_result.mat")
 m_t = data_result["m_t"]
 w_t = data_result["w_t"]
 rho_t = data_result["rho_t"]
@@ -19,7 +19,6 @@ while dev_max > tol && iter < iter_max
     
     # an indicator for the end of transition
     I_end = 0
-    clear!(w_t_test)
     
     # existing entrepreneurs
     for ii in 2:age_max
@@ -31,7 +30,6 @@ while dev_max > tol && iter < iter_max
             wealth_E[tt, ii + tt - 1] = y[1, ii + tt - 1]
             consumption_E[tt, ii + tt - 1] = y[2, ii + tt - 1]
         end
-        clear!(y)
     end
     
     # newly born entrepreneurs
@@ -44,7 +42,6 @@ while dev_max > tol && iter < iter_max
             wealth_E[tt + ii - 1, ii] = y[1, ii]
             consumption_E[tt + ii - 1, ii] = y[2, ii]
         end
-        clear!(y)
     end
 
     # update new factor prices time series
@@ -131,4 +128,4 @@ while dev_max > tol && iter < iter_max
 end
 
 # result
-save("data_result.mat", Dict("m_t" => m_t, "w_t" => w_t, "rho_t" => rho_t))
+save("data_result.jld2", Dict("m_t" => m_t, "w_t" => w_t, "rho_t" => rho_t))

@@ -1,25 +1,9 @@
 module fun_saving_F_exis 
 
+export fun_saving_F_existing 
+
 function fun_saving_F_existing(x)
     # Savings of entrepreneurs
-    
-    # Global variables
-    global bet::Float64
-    global r::Float64
-    global sig::Float64
-    global alp::Float64
-    global ksi::Float64
-    global psi::Float64
-    global del::Float64
-    global age_max::Int64
-    global age_T_w::Int64
-    global time_max::Int64
-    global n_pre::Int64
-    global e_pre::Int64
-    global w_t::Vector{Float64}
-    global m_t::Vector{Float64}
-    global rho_t::Vector{Float64}
-    global g_t::Float64
     
     # Other definition
     age = x[1]   # age

@@ -2,8 +2,13 @@ k_pre = (alp / (r / (1 - ice) + del))^(1 / (1 - alp)) * nw_pre  # total capital 
 w_pre = (1 - alp) * (alp / (r / (1 - ice) + del))^(alp / (1 - alp))  # wage rate during pre-transition period
 
 # for workers
+wealth_pre = zeros(Float64, age_max)
+sr_pre = zeros(Float64, age_max)
+consumption_pre = zeros(Float64, age_max)
+
 for i in 1:age_max
-    x = [i, 0, 0]  # [age, wage, wealth]
+    x = zeros(Float64, 3) # [age, wage, wealth]
+    x[1] = i 
     if i < age_T_w
         x[2] = w_pre  # wage
     else
@@ -13,7 +18,7 @@ for i in 1:age_max
         wealth_pre[i] = 0  # wealth
     end
     x[3] = wealth_pre[i]  # wealth
-    y = fun_saving_pre_transition(x)
+    y = fun_saving_pre_transition(x, dictmain)
     sr_pre[i] = y[3, 1]  # saving rate
     consumption_pre[i] = y[4, 1]  # consumption
     if i < age_max
@@ -28,8 +33,13 @@ wealth_pre .= initial_ratio * wealth_pre
 save("data_pre.jld2", "wealth_pre", wealth_pre)
 
 # for entrepreneurs
+wealth_pre_E = zeros(Float64, age_max)
+sr_pre_E = zeros(Float64, age_max)
+consumption_pre_E = zeros(Float64, age_max)
+
 for i in 1:age_max
-    x = [i, 0, 0]  # [age, wage, wealth]
+    x = zeros(Float64, 3) # [age, wage, wealth]
+    x[1] = i 
     if i < age_T_w
         x[2] = w_pre  # wage
     else
@@ -39,7 +49,7 @@ for i in 1:age_max
         wealth_pre_E[i] = 0  # wealth
     end
     x[3] = wealth_pre_E[i]  # wealth
-    y = fun_saving_pre_transition_E(x)
+    y = fun_saving_pre_transition_E(x, dictmain)
     sr_pre_E[i] = y[3, 1]  # saving rate
     consumption_pre_E[i] = y[4, 1]  # consumption
     if i < age_max

@@ -1,5 +1,7 @@
 module fun_saving_E_new_born
 
+export fun_saving_E_newly_born
+
 function fun_saving_E_newly_born(x)
     # Savings of entrepreneurs
 

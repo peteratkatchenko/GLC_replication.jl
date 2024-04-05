@@ -1,5 +1,7 @@
 module fun_saving_E_exis
 
+export fun_saving_E_existing
+
 function fun_saving_E_existing(x)
 
     # Adjusting rate of return due to the endogenous borrowing constraint

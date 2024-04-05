@@ -1,14 +1,22 @@
 module fun_saving_pre_trans_E
 
-function fun_saving_pre_transition_E(x)
+export fun_saving_pre_transition_E
+
+function fun_saving_pre_transition_E(x::Vector, dict::Dict)
+    age_max = dict[:age_max]
+    age_T_w = dict[:age_T_w]
+    g_t = dict[:g_t]
+    r = dict[:r]
+    bet_E = dict[:bet]
+    sig = dict[:sig]
 
     # Other definitions
-    age = x[1]  # current age
+    age = Int(x[1])  # current age
     wage = x[2]  # current wage
     wealth = x[3]  # current wealth
 
     # Generating interest rate adjusted life-cycle earnings and others
-    w = zeros(age_max)
+    w = zeros(Float64, age_max)
     for i in age:age_max
         if i < age_T_w
             w[i] = wage * ((1 + g_t) / (1 + r))^(i - age)  # earnings
@@ -21,7 +29,7 @@ function fun_saving_pre_transition_E(x)
     A = sum(w) + wealth * (1 + r)
 
     # Computing current optimal consumption and savings
-    ratio = zeros(age_max)
+    ratio = zeros(Float64, age_max)
     for i in age:age_max
         # the interest rate adjusted ratio of optimal consumption to consumption of the current age
         if i == age

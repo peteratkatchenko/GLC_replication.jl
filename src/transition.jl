@@ -9,7 +9,7 @@ iter = 1
 # initial_guess
 
 # true results
-data_result = matread("data_result.mat")
+data_result = matread("C:\\Users\\peter\\.julia\\dev\\glc_replication\\growing_like_china_replication_project\\data_appendix\\matlab\\matlab\\data_result.mat")
 m_t = data_result["m_t"]
 w_t = data_result["w_t"]
 rho_t = data_result["rho_t"]

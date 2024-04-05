@@ -2,18 +2,29 @@ module fun_saving_E_exis
 
 export fun_saving_E_existing
 
-function fun_saving_E_existing(x)
+function fun_saving_E_existing(x::Vector, dictmain::Dict, dictopt::Dict)
+   
+    r = dictmain[:r]
+    ice_t = dictmain[:ice_t]
+    eta = dictmain[:eta]
+    age_max = dictmain[:age_max]
+    age_T = dictmain[:age_T]
+    g_t = dictmain[:g_t]
+    bet_E = dictmain[:bet_E]
+    sig = dictmain[:sig]
+
+    m_t = dictopt[:m_t]
+    rho_t = dictopt[:rho_t]
 
     # Adjusting rate of return due to the endogenous borrowing constraint
-    rho_t_ad = max.(rho_t, (rho_t.*(1+r./(1-ice_t)) .+ eta.*(rho_t - r./(1-ice_t))) ./ (1+r./(1-ice_t) - eta.*(rho_t - r./(1-ice_t))))
-
+    rho_t_ad = max.(rho_t, (rho_t.*(1 .+r./(1 .-ice_t)) .+ eta.*(rho_t .- r./(1 .-ice_t))) ./ (1 .+r./(1 .-ice_t) - eta.*(rho_t .- r./(1 .-ice_t))))
     # Other definitions
-    age = x[1]  # age
-    wealth = zeros(age_max)
+    age = Int(x[1])  # age
+    wealth = zeros(Float64, age_max+1)
     wealth[age] = x[2]  # wealth
 
     # Generating interest rate adjusted life-cycle earnings and others
-    w = zeros(age_max)
+    w = zeros(Float64, age_max)
     for i in age:age_max
         if i < age_T
             w[i] = m_t[i-age+1] * ((1+g_t) / (1+r))^(i-age)  # earnings
@@ -30,8 +41,8 @@ function fun_saving_E_existing(x)
     end
 
     # Computing current optimal consumption and savings
-    ratio = zeros(age_max)
-    consumption = zeros(age_max)
+    ratio = zeros(Float64, age_max)
+    consumption = zeros(Float64, age_max)
     for i in age:age_max
         if i == age
             ratio[i] = 1
@@ -58,8 +69,8 @@ function fun_saving_E_existing(x)
     end
 
     # Definition of y
-    y = [wealth'; consumption']
-    return y
+    result  = Dict(:wealth => wealth, :consumption => consumption)
+    return result 
 end
 
 end #End of fun_saving_E_exis module

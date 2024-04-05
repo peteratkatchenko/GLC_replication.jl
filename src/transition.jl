@@ -1,3 +1,5 @@
+#Transition
+
 # iteration choices
 relax = 0.75
 iter_max = 100
@@ -10,9 +12,37 @@ iter = 1
 
 # true results
 data_result = matread("C:\\Users\\peter\\.julia\\dev\\glc_replication\\growing_like_china_replication_project\\data_appendix\\matlab\\matlab\\data_result.mat")
-m_t = data_result["m_t"]
-w_t = data_result["w_t"]
-rho_t = data_result["rho_t"]
+
+m_t = transpose(data_result["m_t"])
+w_t = transpose(data_result["w_t"])
+rho_t = transpose(data_result["rho_t"])
+dictopt = Dict(:m_t => m_t, :w_t => w_t, :rho_t => rho_t)
+
+wealth_E = zeros(Float64, (time_max+age_max-1), (age_max))
+consumption_E = zeros(Float64, (time_max+age_max-1), (age_max))
+E_t = zeros(Float64, time_max)
+ae = zeros(Float64, time_max, age_max)
+AE = zeros(Float64, time_max, age_max)
+loan_ratio = zeros(Float64, time_max)
+loan = zeros(Float64, time_max, age_max)
+ke = zeros(Float64, time_max, age_max)
+ne = zeros(Float64, time_max, age_max)
+KE = zeros(Float64, time_max, age_max)
+NE = zeros(Float64, time_max, age_max)
+LE = zeros(Float64, time_max, age_max)
+AE_t = zeros(Float64, time_max)
+NE_t = zeros(Float64, time_max)
+KE_t = zeros(Float64, time_max)
+LE_t = zeros(Float64, time_max)
+N_t = zeros(Float64, time_max)
+w_t_new = zeros(Float64, (time_max+age_max-1))
+rho_t_new = zeros(Float64, (time_max+age_max-1))
+m_t_new = zeros(Float64, (time_max+age_max-1))
+YE_t = zeros(Float64, time_max)
+M_t = zeros(Float64, time_max)
+dev_w = zeros(Float64, (time_max+age_max-1))
+dev_rho = zeros(Float64, (time_max+age_max-1))
+dev_m = zeros(Float64, (time_max+age_max-1))
 
 # start to iterate
 while dev_max > tol && iter < iter_max
@@ -23,24 +53,26 @@ while dev_max > tol && iter < iter_max
     # existing entrepreneurs
     for ii in 2:age_max
         # computing existing entrepreneurs wealth given the guess of m_t and rho_t
-        y = fun_saving_E_existing([ii, wealth_pre_E[ii]])
-        
+        result = fun_saving_E_existing([ii, wealth_pre_E[ii]], dictmain, dictopt)
+        wealth = result[:wealth]
+        consumption = result[:consumption]
         # wealth time series for the existing entrepreneur with age ii
         for tt in 1:(age_max - ii + 1)
-            wealth_E[tt, ii + tt - 1] = y[1, ii + tt - 1]
-            consumption_E[tt, ii + tt - 1] = y[2, ii + tt - 1]
+            wealth_E[tt, ii + tt - 1] = wealth[ii + tt - 1]
+            consumption_E[tt, ii + tt - 1] = consumption[ii + tt - 1]
         end
     end
-    
+   
     # newly born entrepreneurs
     for tt in 1:time_max
         # computing entrepreneurs wealth given the guess of m_t and rho_t
-        y = fun_saving_E_newly_born([tt, wealth_pre[ii]])
-        
+        result = fun_saving_E_newly_born([tt], dictmain, dictopt)
+        wealth = result[:wealth]
+        consumption = result[:consumption]
         # wealth time series for the existing entrepreneur with age ii
         for ii in 1:age_max
-            wealth_E[tt + ii - 1, ii] = y[1, ii]
-            consumption_E[tt + ii - 1, ii] = y[2, ii]
+            wealth_E[tt + ii - 1, ii] = wealth[ii]
+            consumption_E[tt + ii - 1, ii] = consumption[ii]
         end
     end
 
@@ -48,7 +80,7 @@ while dev_max > tol && iter < iter_max
     for t in 1:time_max
         # fixed size of managers
         E_t[t] = e_pre - ee_pre
-        
+
         # assets in the E sector
         for i in 1:age_max
             ae[t, i] = wealth_E[t, i]  # entrepreneurial capital owned by an entrepreneur at time t with age i
@@ -65,7 +97,7 @@ while dev_max > tol && iter < iter_max
                 loan[t, i] = 0
                 ke[t, i] = wealth_E[t, i]  # entrepreneurial capital owned by an entrepreneur at time t with age i
             end
-            
+           
             ne[t, i] = ke[t, i] * ((1 - alp) * (1 - psi) * ksi^(1 - alp) / w_t[t])^(1 / alp)  # labor employed by an entrepreneur at time with age i
             KE[t, i] = e_weight[i] * ke[t, i]  # total capital owned by all entrepreneurs at time with age i
             NE[t, i] = e_weight[i] * ne[t, i]  # total labor employed by all entrepreneurs at time with age i
@@ -112,19 +144,19 @@ while dev_max > tol && iter < iter_max
     m_t_new[time_max + 1:time_max + age_max - 1] .= m_t_new[time_max]
 
     # deviation
-    dev_w = abs.(w_t_new .- w_t)
-    dev_rho = abs.(rho_t_new .- rho_t)
-    dev_m = abs.(m_t_new .- m_t)
+    local dev_w = abs.(w_t_new .- w_t)
+    local dev_rho = abs.(rho_t_new .- rho_t)
+    local dev_m = abs.(m_t_new .- m_t)
     dev_w_max = maximum(dev_w)
     dev_rho_max = maximum(dev_rho)
     dev_m_max = maximum(dev_m)
-    dev_max = maximum([dev_w_max, dev_rho_max, dev_m_max])
+    local dev_max = maximum([dev_w_max, dev_rho_max, dev_m_max])
 
     # renew
     w_t .= w_t .* relax .+ w_t_new .* (1 - relax)
     rho_t .= rho_t .* relax .+ rho_t_new .* (1 - relax)
     m_t .= m_t .* relax .+ m_t_new .* (1 - relax)
-    iter += 1
+    local iter += 1
 end
 
 # result

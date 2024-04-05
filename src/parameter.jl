@@ -4,6 +4,7 @@ using Statistics
 using Plots
 using MAT
 using JLD2
+using Statistics 
 
 include("fun_saving_pre_transition.jl") 
 
@@ -101,23 +102,17 @@ for t in time_ab:time_cd
     ice_t[t]=ice+(t-time_ab)^speed*(ice_t[time_cd]-ice)/(time_cd-time_ab)^speed
 end
 
-
 dictmain = Dict(:bet => bet, :bet_E => bet_E, :r => r, :sig => sig, :alp => alp, :ksi => ksi, :psi => psi, :del => del,
 :age_max => age_max, :age_T => age_T, :age_T_w => age_T_w, :time_max => time_max, :n_pre => n_pre, :e_pre => e_pre, 
 :g_n => g_n, :g_t => g_t, :n_weight => n_weight, :e_weight => e_weight, :nw_pre => nw_pre, :ee_pre => ee_pre, :ice_t => ice_t,
 :eta => eta, :loan_asset => loan_asset)
 
-#=dictmain = Dict("bet" => bet, "bet_E" => bet_E, "r" => r, "sig" => sig, "alp" => alp, "ksi" => ksi, "psi" => psi, "del" => del,
-"age_max" => age_max, "age_T" => age_T, "age_T_w" => age_T_w, "time_max" => time_max, "n_pre" => n_pre, "e_pre" => e_pre, 
-"g_n" => g_n, "g_t" => g_t, "n_weight" => n_weight, "e_weight" => e_weight, "nw_pre" => nw_pre, "ee_pre" => ee_pre, "ice_t" => ice_t,
-"eta" => eta, "loan_asset" => loan_asset)=#
-
 include("pre_transition.jl")
 
-#include("transition.jl")
+include("transition.jl")
 
-#include("result.jl")
+#include("result.jl")           
 
 #include("six_panel.jl")
 
-end #End of main_parameter module
+end #End of module main_parameter

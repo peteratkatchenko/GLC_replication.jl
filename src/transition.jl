@@ -155,13 +155,13 @@ while dev_max > tol && iter < iter_max
     dev_w_max = maximum(dev_w)
     dev_rho_max = maximum(dev_rho)
     dev_m_max = maximum(dev_m)
-    dev_max = maximum([dev_w_max, dev_rho_max, dev_m_max])
+    global dev_max = maximum([dev_w_max, dev_rho_max, dev_m_max])
 
     # renew
     w_t .= w_t .* relax .+ w_t_new .* (1 - relax)
     rho_t .= rho_t .* relax .+ rho_t_new .* (1 - relax)
     m_t .= m_t .* relax .+ m_t_new .* (1 - relax)
-    iter += 1
+    global iter += 1
 end
 
 

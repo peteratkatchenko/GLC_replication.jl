@@ -117,7 +117,7 @@ include("pre_transition.jl")
 
 include("transition.jl")
 
-#include("result.jl")           
+include("result.jl")           
 
 #include("six_panel.jl")
 

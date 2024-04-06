@@ -60,7 +60,6 @@ end
 # initial condition
 wealth_pre_E .= initial_ratio_E * wealth_pre_E
 
-println(minimum(wealth_pre_E))
 
 # save data
 save("data_pre_E.jld2", "wealth_pre_E", wealth_pre_E)

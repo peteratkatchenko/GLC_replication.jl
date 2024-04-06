@@ -18,6 +18,7 @@ function fun_saving_E_existing(x::Vector, dictmain::Dict, dictopt::Dict)
 
     # Adjusting rate of return due to the endogenous borrowing constraint
     rho_t_ad = max.(rho_t, (rho_t.*(1 .+r./(1 .-ice_t)) .+ eta.*(rho_t .- r./(1 .-ice_t))) ./ (1 .+r./(1 .-ice_t) - eta.*(rho_t .- r./(1 .-ice_t))))
+
     # Other definitions
     age = Int(x[1])  # age
     wealth = zeros(Float64, age_max+1)
@@ -42,7 +43,6 @@ function fun_saving_E_existing(x::Vector, dictmain::Dict, dictopt::Dict)
 
     # Computing current optimal consumption and savings
     ratio = zeros(Float64, age_max)
-    consumption = zeros(Float64, age_max)
     for i in age:age_max
         if i == age
             ratio[i] = 1
@@ -51,7 +51,10 @@ function fun_saving_E_existing(x::Vector, dictmain::Dict, dictopt::Dict)
         else
             ratio[i] = (bet_E * (1+rho_t_ad[i-age+1]) / (1+g_t))^(1/sig) * (1+g_t) / (1+rho_t_ad[i-age+1]) * ratio[i-1]
         end
+    end 
 
+    consumption = zeros(Float64, age_max)
+    for i in age:age_max 
         if i == age
             consumption[i] = A / sum(ratio)
             if i < age_T

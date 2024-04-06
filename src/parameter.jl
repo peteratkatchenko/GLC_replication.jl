@@ -5,6 +5,8 @@ using Plots
 using MAT
 using JLD2
 using Statistics 
+using CSV 
+using DataFrames 
 
 include("fun_saving_pre_transition.jl") 
 
@@ -46,6 +48,7 @@ g_t=0.038; #exogenous TFP growth
 bet=bet*(1+g_t)^(1-sig); #TFP growth adjusted discount factor
 bet_E=bet_E*(1+g_t)^(1-sig); #TFP growth adjusted discount factor
 
+
 #calibration targets
 KY_F_E=2.65; # the ratio of K/Y in the F sector to K/Y in the E sector
 rho_r=(r_soe_ini+0.09)/(r/(1-ice)); # the ratio of the rate of return in the E sector to that in the F sector
@@ -55,6 +58,7 @@ ksi=(KY_F_E)^(alp/(1-alp))/(1-psi) # productivity ratio of E over F
 # bank loan in the E sector
 loan_asset=1; # loan asset ratio
 eta=loan_asset*(1+r/(1-ice))/(1+rho_r*r/(1-ice)+(rho_r*r/(1-ice)-r/(1-ice))*loan_asset) # measure of financial frictions
+
 
 # initial asset
 initial_ratio=0.80;
@@ -102,10 +106,12 @@ for t in time_ab:time_cd
     ice_t[t]=ice+(t-time_ab)^speed*(ice_t[time_cd]-ice)/(time_cd-time_ab)^speed
 end
 
+
 dictmain = Dict(:bet => bet, :bet_E => bet_E, :r => r, :sig => sig, :alp => alp, :ksi => ksi, :psi => psi, :del => del,
 :age_max => age_max, :age_T => age_T, :age_T_w => age_T_w, :time_max => time_max, :n_pre => n_pre, :e_pre => e_pre, 
 :g_n => g_n, :g_t => g_t, :n_weight => n_weight, :e_weight => e_weight, :nw_pre => nw_pre, :ee_pre => ee_pre, :ice_t => ice_t,
 :eta => eta, :loan_asset => loan_asset)
+
 
 include("pre_transition.jl")
 

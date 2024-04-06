@@ -18,35 +18,39 @@ w_t = transpose(data_result["w_t"])
 rho_t = transpose(data_result["rho_t"])
 dictopt = Dict(:m_t => m_t, :w_t => w_t, :rho_t => rho_t)
 
-wealth_E = zeros(Float64, (time_max+age_max-1), (age_max))
-consumption_E = zeros(Float64, (time_max+age_max-1), (age_max))
-E_t = zeros(Float64, time_max)
-ae = zeros(Float64, time_max, age_max)
-AE = zeros(Float64, time_max, age_max)
-loan_ratio = zeros(Float64, time_max)
-loan = zeros(Float64, time_max, age_max)
-ke = zeros(Float64, time_max, age_max)
-ne = zeros(Float64, time_max, age_max)
-KE = zeros(Float64, time_max, age_max)
-NE = zeros(Float64, time_max, age_max)
-LE = zeros(Float64, time_max, age_max)
-AE_t = zeros(Float64, time_max)
-NE_t = zeros(Float64, time_max)
-KE_t = zeros(Float64, time_max)
-LE_t = zeros(Float64, time_max)
-N_t = zeros(Float64, time_max)
-w_t_new = zeros(Float64, (time_max+age_max-1))
-rho_t_new = zeros(Float64, (time_max+age_max-1))
-m_t_new = zeros(Float64, (time_max+age_max-1))
-YE_t = zeros(Float64, time_max)
-M_t = zeros(Float64, time_max)
-dev_w = zeros(Float64, (time_max+age_max-1))
-dev_rho = zeros(Float64, (time_max+age_max-1))
-dev_m = zeros(Float64, (time_max+age_max-1))
-
 # start to iterate
 while dev_max > tol && iter < iter_max
-    
+
+
+    wealth_E = zeros(Float64, (time_max+age_max-1), (age_max))
+    consumption_E = zeros(Float64, (time_max+age_max-1), (age_max))
+
+    E_t = zeros(Float64, time_max)
+    ae = zeros(Float64, time_max, age_max)
+    AE = zeros(Float64, time_max, age_max)
+    loan_ratio = zeros(Float64, time_max)
+    loan = zeros(Float64, time_max, age_max)
+    ke = zeros(Float64, time_max, age_max)
+    ne = zeros(Float64, time_max, age_max)
+    KE = zeros(Float64, time_max, age_max)
+    NE = zeros(Float64, time_max, age_max)
+    LE = zeros(Float64, time_max, age_max)
+    AE_t = zeros(Float64, time_max)
+    NE_t = zeros(Float64, time_max)
+    KE_t = zeros(Float64, time_max)
+    LE_t = zeros(Float64, time_max)
+    N_t = zeros(Float64, time_max)
+    w_t_new = zeros(Float64, (time_max+age_max-1))
+    rho_t_new = zeros(Float64, (time_max+age_max-1))
+    m_t_new = zeros(Float64, (time_max+age_max-1))
+    YE_t = zeros(Float64, time_max)
+    M_t = zeros(Float64, time_max)
+
+    dev_w = zeros(Float64, (time_max+age_max-1))
+    dev_rho = zeros(Float64, (time_max+age_max-1))
+    dev_m = zeros(Float64, (time_max+age_max-1))
+
+
     # an indicator for the end of transition
     I_end = 0
     
@@ -75,6 +79,7 @@ while dev_max > tol && iter < iter_max
             consumption_E[tt + ii - 1, ii] = consumption[ii]
         end
     end
+
 
     # update new factor prices time series
     for t in 1:time_max
@@ -144,20 +149,21 @@ while dev_max > tol && iter < iter_max
     m_t_new[time_max + 1:time_max + age_max - 1] .= m_t_new[time_max]
 
     # deviation
-    local dev_w = abs.(w_t_new .- w_t)
-    local dev_rho = abs.(rho_t_new .- rho_t)
-    local dev_m = abs.(m_t_new .- m_t)
+    dev_w = abs.(w_t_new .- w_t)
+    dev_rho = abs.(rho_t_new .- rho_t)
+    dev_m = abs.(m_t_new .- m_t)
     dev_w_max = maximum(dev_w)
     dev_rho_max = maximum(dev_rho)
     dev_m_max = maximum(dev_m)
-    local dev_max = maximum([dev_w_max, dev_rho_max, dev_m_max])
+    dev_max = maximum([dev_w_max, dev_rho_max, dev_m_max])
 
     # renew
     w_t .= w_t .* relax .+ w_t_new .* (1 - relax)
     rho_t .= rho_t .* relax .+ rho_t_new .* (1 - relax)
     m_t .= m_t .* relax .+ m_t_new .* (1 - relax)
-    local iter += 1
+    iter += 1
 end
+
 
 # result
 save("data_result.jld2", Dict("m_t" => m_t, "w_t" => w_t, "rho_t" => rho_t))

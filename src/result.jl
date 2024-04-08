@@ -210,9 +210,7 @@ time_begin=1
 time_end=100
 tt=[time_begin:time_end]
 
-f1 = plot(layout=(4,2))
-
-plot!(f1, 1, tt, Y_N_t[time_begin:time_end], title="panel a: aggregate output per capita", linewidth=2, color=:red)
+f1p1 = plot(tt, Y_N_t[time_begin:time_end], title="panel a: aggregate output per capita", linewidth=2, color=:red)
 
 # subplot(4,2,2)
 # plot(tt,NE_t(time_begin:time_end),'r','linewidth',2)
@@ -224,9 +222,9 @@ plot!(f1, 1, tt, Y_N_t[time_begin:time_end], title="panel a: aggregate output pe
 # 
 # hold off
 
-plot!(f1, 2, tt, NE_N_t[time_begin:time_end], title="panel b: private employment share", linewidth=2, color=:red)
+f1p2 = plot(tt, NE_N_t[time_begin:time_end], title="panel b: private employment share", linewidth=2, color=:red)
 
-plot!(f1, 3, tt, w_t[time_begin:time_end], title="panel c: wage rate", linewidth=2, color=:red)
+f1p3 = plot(tt, w_t[time_begin:time_end], title="panel c: wage rate", linewidth=2, color=:red)
 
 # plot(tt,m_t(time_begin:time_end),'r','linewidth',2)
 # # gtext('managerial compensations')
@@ -234,7 +232,7 @@ plot!(f1, 3, tt, w_t[time_begin:time_end], title="panel c: wage rate", linewidth
 # gtext('wage rate')
 # title('panel c: income inequality')
 
-plot!(f1, 4, tt, rho_t[time_begin:time_end], title="panel d: rate of return to capital", linewidth=2, color=:red)
+f1p4 = plot(tt, rho_t[time_begin:time_end], title="panel d: rate of return to capital", linewidth=2, color=:red)
 
 # gtext('the rate of returns for entrepreneurs')
 #r_t(time_begin:time_end)=r
@@ -243,13 +241,15 @@ plot!(f1, 4, tt, rho_t[time_begin:time_end], title="panel d: rate of return to c
 
 subplot = plot(tt, I_Y_t[time_begin:time_end], label="I/Y", color=:red, linewidth=2)
 plot!(subplot, tt, S_Y_t[time_begin:time_end], label="S/Y", color=:black, linewidth=2)
-plot!(f1, 5, subplot, title="panel e: the aggregate investment and saving rates", linewidth=2)
+f1p5 = plot!(subplot, title="panel e: the aggregate investment and saving rates")
 
-plot!(f1, 6, tt, K_Y_t[time_begin:time_end], title="panel f: the aggregate capital output ratio", linewidth=2, color=:red)
+f1p6 = plot(tt, K_Y_t[time_begin:time_end], title="panel f: the aggregate capital output ratio", linewidth=2, color=:red)
 
-plot!(f1, 7, tt, FA_Y_t[time_begin:time_end], title="panel h: foreign reserves output ratio", linewidth=2, color=:red)
+f1p7 = plot(tt, FA_Y_t[time_begin:time_end], title="panel h: foreign reserves output ratio", linewidth=2, color=:red)
 
-plot!(f1, 8, tt, TFP_t[time_begin:time_end], title="panel h: TFP growth rate", linewidth=2, color=:red)
+f1p8 = plot(tt, TFP_t[time_begin:time_end], title="panel h: TFP growth rate", linewidth=2, color=:red)
+
+f1 = plot(f1p1, f1p2, f1p3, f1p4, f1p5, f1p6, f1p7, f1p8, layout=(4,2))
 
 savefig(f1, "figure_1.png")
 
@@ -312,20 +312,20 @@ data_res=[0.038897003,
 # end of year
 end_year=2012
 
-f2 = plot(layout=(2,1))
-
 subplot1 = plot([1992:end_year], S_Y_t[1:end_year-1992+1], label="model", color=:blue, linewidth=2)
 
 plot!(subplot1, [1992:2007], data_sav, label="data", color=:red, linewidth=2)
 
-plot!(f2, 1, subplot1, title="aggregate saving rate", xlabel="year")
+f2p1 = plot(subplot1, title="Aggregate Saving Rate", xlabel="year")
 
 
 subplot2 = plot([1992:end_year], I_Y_t[1:end_year-1992+1], label="model", color=:blue, linewidth=2)
 
 plot!(subplot2, [1992:2007], data_inv, label="data", color=:red, linewidth=2)
 
-plot!(f2, 2, subplot2, title="aggregate investment rate", xlabel="year")
+f2p2 = plot(subplot2, title="Aggregate Investment Rate", xlabel="year")
+
+f2 = plot(f2p1, f2p2, layout=(2,1))
 
 savefig(f2, "figure_2.png")
 
@@ -379,44 +379,40 @@ data_SI_Y=[0.009998114,
 
 #Figure 3
 
-f3 = plot(layout=(1,1))
-
 subplot3 = plot([1992:end_year], NE_N_t[1:end_year-1992+1], label="model", color=:blue, linewidth=2)
 
 plot!(subplot3, [1998:2007], data_em_sh, label="firm data", color=:red, linewidth=2)
 
 plot!(subplot3, [1992:2007], data_em_sh_agg, label="aggregate data", color=:black, linewidth=2)
 
-plot!(f3, 1, subplot3, title="private employment share", xlabel="year")
+f3 = plot(subplot3, title="Private Employment Share", xlabel="year")
 
 savefig(f3, "figure_3.png")
 
 
 #Figure 4
 
-f4 = plot(layout=(2,1))
-
 subplot4 = plot([1992:end_year], BoP_Y_t[1:end_year-1992+1], label="model", color=:blue, linewidth=2)
 
 plot!(subplot4, [1992:2007], data_SI_Y, label="data", color=:red, linewidth=2)
 
-plot!(f4, 1, subplot4, title="net export GDP ratio", xlabel="year")
+f4p1 = plot(subplot4, title="Net Export GDP Ratio", xlabel="year")
 
 
 subplot5 = plot([1992:end_year], FA_Y_t[1:end_year-1992+1], label="model", color=:blue, linewidth=2)
 
 plot!(subplot5, [1992:2007], data_res, label="data", color=:red, linewidth=2)
 
-plot!(f4, 2, subplot5, title="foreign reserve GDP ratio", xlabel="year")
+f4p2 = plot(subplot5, title="Foreign Reserve GDP Ratio", xlabel="year")
+
+f4 = plot(f4p1, f4p2, layout=(2,1))
 
 savefig(f4, "figure_4.png")
 
 #Figure 5 
 
-f5 = plot(layout=(1,1))
-
 subplot6 = plot([1993:end_year], TFP_t[2:end_year-1992+1], color=:blue, linewidth=2)
-plot!(f5, 1, subplot6, title="TFP growth rate", xlabel="year")
+f5 = plot(subplot6, title="TFP Growth Rate", xlabel="year")
 
 savefig(f5, "figure_5.png")
 
@@ -428,31 +424,30 @@ savefig(f5, "figure_5.png")
 
 #Figure 6
 
-f6 = plot(layout=(1,1))
 subplot7 = plot([1992:2012], ice_t[1:21], color=:blue, linewidth=2)
-plot!(f6, 1, subplot7, title="iceberg costs", xlabel="year")
+f6 = plot(subplot7, title="Iceburg Costs", xlabel="year")
 
 savefig(f6, "figure_6.png")
 
 
 #Figure 7
 
-f7 = plot(layout=(2,1))
-
 subplot8 = plot([1992:2012], RR_t[1:21], color=:blue, linewidth=2) 
-plot!(f7, 1, subplot8, title="aggregate rate of return to capital", xlabel="year")
+f7p1 = plot(subplot8, title="Aggregate Rate of Return to Capital", xlabel="year")
 
 subplot9 = plot([1992:2012], labor_share_t[1:21], color=:blue, linewidth=2)
-plot!(f7, 2, subplot9, title="labor share", xlabel="year")
+f7p2 = plot(subplot9, title="Labor Share", xlabel="year")
+
+f7 = plot(f7p1, f7p2, layout=(2,1))
 
 savefig(f7, "figure_7.png")
 
 #Figure 8
 
-f8 = plot(layout=(2,2))
+f8p1 = scatter(NE_N_t[1:time_max-1], Y_t[1:time_max-1], xlabel="private employment share", ylabel="GDP")
 
-subplot10 = scatter(NE_N_t[1:time_max-1], Y_t[1:time_max-1], xlabel="private employment share", ylabel="GDP")
-plot!(f8, 1, subplot10)
+f8p2 = scatter(NG_t, YG_t, xlabel="private employment share growth rate", ylabel="GDP growth rate")
 
-subplot11 = scatter(NG_t, YG_t, xlabel="private employment share growth rate", ylabel="GDP growth rate")
-plot!(f8, 2, subplot11)
+f8 = plot(f8p1, f8p2, layout=(2,1))
+
+savefig(f8, "figure_8.png")

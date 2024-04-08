@@ -1,14 +1,61 @@
 # workers savings and assets
+N_t = zeros(Float64, time_max, age_max)
+AF = zeros(Float64, time_max, age_max)
+CF = zeros(Float64, time_max, age_max)
+CE = zeros(Float64, time_max, age_max)
+
+AF_t = zeros(Float64, time_max)
+CF_t = zeros(Float64, time_max)
+CE_t = zeros(Float64, time_max)
+KF_t = zeros(Float64, time_max)
+YF_t = zeros(Float64, time_max)
+NF_t = zeros(Float64, time_max)
+NE_N_t = zeros(Float64, time_max)
+IF_t = zeros(Float64, time_max)
+IE_t = zeros(Float64, time_max)
+IF_Y_t = zeros(Float64, time_max)
+I_Y_t = zeros(Float64, time_max)
+Y_N_t = zeros(Float64, time_max)
+SE_YE_t = zeros(Float64, time_max)
+SE_t = zeros(Float64, time_max)
+SF_YF_t = zeros(Float64, time_max)
+IE_Y_t = zeros(Float64, time_max)
+SF_t = zeros(Float64, time_max)
+FA_Y_t = zeros(Float64, time_max)
+BoP_Y_t = zeros(Float64, time_max)
+TFP_t = zeros(Float64, time_max)
+YG_t = zeros(Float64, time_max)
+K_Y_t = zeros(Float64, time_max)
+S_Y_t = zeros(Float64, time_max)
+NG_t = zeros(Float64, time_max)
+xxx_t = zeros(Float64, time_max)
+xx1_t = zeros(Float64, time_max)
+xx2_t = zeros(Float64, time_max)
+xx3_t = zeros(Float64, time_max)
+RR_t = zeros(Float64, time_max)
+labor_share_t = zeros(Float64, time_max)
+
+wealth_F = zeros(Float64, (time_max+age_max-1), (age_max))
+consumption_F = zeros(Float64, (time_max+age_max-1), (age_max))
+
+#=consumption_E = dicttrans[:consumption_E]
+NE_t = dicttrans[:NE_t]
+YE_t = dicttrans[:YE_t]
+KE_t = dictrans[:KE_t]
+AE_t = dicttrans[:AE_t]
+LE_t = dictrans[:LE_t]=#
 
 for ii = 2:age_max
-    
+
     # computing existing workers wealth given the guess of  m_t and rho_t
-    y=fun_saving_F_existing([ii,wealth_pre(ii)])
+    result=fun_saving_F_existing([ii,wealth_pre[ii]], dictmain, dictopt)
+    wealth = result[:wealth]
+    consumption = result[:consumption]
             
     # wealth time series for the existing workers with age ii
     for tt = 1:age_max-ii+1
-        wealth_F[tt,ii+tt-1]=y[1,ii+tt-1];
-        consumption_F[tt,ii+tt-1]=y[2,ii+tt-1];
+        wealth_F[tt,ii+tt-1]= wealth[ii+tt-1]
+        consumption_F[tt,ii+tt-1]= consumption[ii+tt-1]
     end
 end # existing workers
 
@@ -16,12 +63,14 @@ end # existing workers
 for tt = 1:time_max
         
     # computing workers wealth given the guess of  m_t and rho_t
-    y=fun_saving_F_newly_born(tt);
+    result=fun_saving_F_newly_born([tt], dictmain, dictopt)
+    wealth = result[:wealth]
+    consumption = result[:consumption]
 
     # wealth time series for the existing enterpreneurs with age ii
     for ii = 1:age_max
-        wealth_F[tt+ii-1,ii]=y[1,ii];
-        consumption_F[tt+ii-1,ii]=y[2,ii];
+        wealth_F[tt+ii-1,ii]= wealth[ii]
+        consumption_F[tt+ii-1,ii]= consumption[ii]
     end
 end # newly born workers
 
@@ -29,34 +78,37 @@ end # newly born workers
 for t = 1:time_max
     
     # no migration
-    N_t[t]=nw_pre;
+    N_t[t]=nw_pre
     
     # total assets of workers and total consumptions
     for i = 1:age_max
-        AF[t,i]=n_weight[i]*wealth_F[t,i]; 
-        CF[t,i]=n_weight[i]*consumption_F[t,i];
-        CE[t,i]=e_weight[i]*consumption_E[t,i];
+        AF[t,i]=n_weight[i]*wealth_F[t,i] 
+        CF[t,i]=n_weight[i]*consumption_F[t,i]
+        CE[t,i]=e_weight[i]*consumption_E[t,i]
     end
-    AF_t[t]=sum(AF[t,:]); # aggregate capital in the E sector
-    CF_t[t]=sum(CF[t,:]); # aggregate consumption in the F sector
-    CE_t[t]=sum(CE[t,:]); # aggregate consumption in the E sector
+
+    AF_t[t]=sum(AF[t,:]) # aggregate capital in the E sector
+    CF_t[t]=sum(CF[t,:]) # aggregate consumption in the F sector
+    CE_t[t]=sum(CE[t,:]) # aggregate consumption in the E sector
     
     # the F sector
     if NE_t[t] < N_t[t]
-        KF_t[t]=(alp/(r/(1-ice_t[t])+del))^(1/(1-alp))*(N_t[t]-NE_t[t]); # aggregate capital in the F sector
-        YF_t[t]=KF_t[t]^alp*(N_t[t]-NE_t[t])^(1-alp); # aggregate output in the F sector
-        NF_t[t]=N_t[t]-NE_t[t]; # aggregate workers in the F sector
+        KF_t[t]=(alp/(r/(1-ice_t[t])+del))^(1/(1-alp))*(N_t[t]-NE_t[t]) # aggregate capital in the F sector
+        YF_t[t]=KF_t[t]^alp*(N_t[t]-NE_t[t])^(1-alp) # aggregate output in the F sector
+        NF_t[t]=N_t[t]-NE_t[t] # aggregate workers in the F sector
     else
-        KF_t[t]=0; YF_t[t]=0; NF_t[t]=0;
+        KF_t[t]=0
+        YF_t[t]=0
+        NF_t[t]=0
     end
 end
 
 # aggregation
-Y_t=YF_t+YE_t
+Y_t= YF_t+YE_t
 
-K_t=KF_t+KE_t
+K_t= KF_t+KE_t
 
-C_t=CF_t+CE_t
+C_t= CF_t+CE_t
 
 for t = 1:time_max-1
     
@@ -64,11 +116,11 @@ for t = 1:time_max-1
     NE_N_t[t]=NE_t[t]/N_t[t]
     
     # computing investment in the F sector
-    IF_t[t]=[1+g_t]*[1+g_n]*KF_t[t+1]-[1-del]*KF_t[t]
+    IF_t[t]=(1+g_t)*(1+g_n)*KF_t[t+1]-(1-del)*KF_t[t]
     # -r*ice_t(t)/(1-ice_t(t))
     
     # computing investment in the E sector
-    IE_t[t]=(1+g_t)*(1+g_n)*KE_t[t+1]-[1-del]*KE_t[t]
+    IE_t[t]=(1+g_t)*(1+g_n)*KE_t[t+1]-(1-del)*KE_t[t]
     
     # investment rates in the two sector
     if YF_t[t]>0
@@ -124,15 +176,15 @@ for t = 1:time_max-1
 
 end
 
-Y_data=Y_t[1:21]'
-K_data=K_t[1:21]'
-save("YK_data.jld2", Y_data, K_data)
+Y_data=Y_t[1:21]
+K_data=K_t[1:21]
+save("YK_data.jld2", "Y_data", "K_data", Y_data, K_data)
 
 # TFP growth from 1998 through 2005
 TFP_growth=Y_t[14]/Y_t[7]-alp*K_t[14]/K_t[7]-(1-alp)*N_t[14]/N_t[7]
-output_growth=Y_t[14]/Y_t[7]-1;
-K_growth=K_t[14]/K_t[7]-1;
-w_growth=w_t[14]/w_t[7]-1;
+output_growth=Y_t[14]/Y_t[7]-1
+K_growth=K_t[14]/K_t[7]-1
+w_growth=w_t[14]/w_t[7]-1
 annual_TFP_growth=(1+TFP_growth)^(1/7)-1+(1-alp)*g_t
 annual_output_growth=(1+output_growth)^(1/7)-1+g_n+g_t
 annual_wage_growth=(1+w_growth)^(1/7)-1+g_t

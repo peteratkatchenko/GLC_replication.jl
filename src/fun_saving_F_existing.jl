@@ -2,16 +2,25 @@ module fun_saving_F_exis
 
 export fun_saving_F_existing 
 
-function fun_saving_F_existing(x)
+function fun_saving_F_existing(x::Vector, dictmain::Dict, dictopt::Dict)
+    age_max = dictmain[:age_max]
+    age_T_w = dictmain[:age_T_w]
+    g_t = dictmain[:g_t]
+    r = dictmain[:r]
+    bet = dictmain[:bet]
+    sig = dictmain[:sig]
+
+    w_t = dictopt[:w_t]
+
     # Savings of entrepreneurs
     
     # Other definition
-    age = x[1]   # age
-    wealth = zeros(age_max)  # wealth array
+    age = Int(x[1])   # age
+    wealth = zeros(Float64, age_max+1)  # wealth array
     wealth[age] = x[2]   # wealth at given age
     
     # Generating interest rate adjusted life-cycle earnings and others
-    w = zeros(age_max)
+    w = zeros(Float64, age_max)
     for i in age:age_max
         if i < age_T_w
             w[i] = w_t[i - age + 1] * ((1 + g_t) / (1 + r))^(i - age)  # Earnings
@@ -24,7 +33,7 @@ function fun_saving_F_existing(x)
     A = sum(w) + (1 + r) * wealth[age]
     
     # Computing current optimal consumption and savings
-    ratio = zeros(age_max)
+    ratio = zeros(Float64, age_max)
     for i in age:age_max
         if i == age
             ratio[i] = 1
@@ -34,7 +43,7 @@ function fun_saving_F_existing(x)
     end
     
     # Optimal consumption and savings
-    consumption = zeros(age_max)
+    consumption = zeros(Float64, age_max)
     for i in age:age_max
         if i == age
             consumption[i] = A / sum(ratio)
@@ -53,9 +62,8 @@ function fun_saving_F_existing(x)
     end
     
     # Definition of y
-    y = [wealth'; consumption']
-    
-    return y
+    result  = Dict(:wealth => wealth, :consumption => consumption)
+    return result 
 end
 
 end #End of fun_saving_F_exis module 

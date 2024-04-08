@@ -119,6 +119,6 @@ include("transition.jl")
 
 include("result.jl")           
 
-#include("six_panel.jl")
+include("six_panel.jl")
 
 end #End of module main_parameter

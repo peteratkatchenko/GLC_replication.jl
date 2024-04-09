@@ -11,7 +11,7 @@ iter = 1
 # initial_guess
 
 # true results
-data_result = matread("C:\\Users\\peter\\.julia\\dev\\glc_replication\\growing_like_china_replication_project\\data_appendix\\matlab\\matlab\\data_result.mat")
+data_result = matread("C:\\Users\\peter\\.julia\\dev\\glc_replication\\replication_package\\data_appendix\\matlab\\matlab\\data_result.mat")
 
 m_t = transpose(data_result["m_t"])
 w_t = transpose(data_result["w_t"])
@@ -162,14 +162,6 @@ while dev_max > tol && iter < iter_max
     m_t .= m_t .* relax .+ m_t_new .* (1 - relax)
     global iter += 1
 end
-
-#=dicttrans = Dict[:wealth_E => wealth_E, 
-:consumption_E = consumption_E,
-:NE_t => NE_t,
-:YE_t => YE_t, 
-:KE_t => KE_t,
-:AE_t => AE_t,
-:LE_t => LE_t]=#
 
 # result
 save("data_result.jld2", Dict("m_t" => m_t, "w_t" => w_t, "rho_t" => rho_t))

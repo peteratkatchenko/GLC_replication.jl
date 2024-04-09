@@ -1,9 +1,9 @@
 # workers savings and assets
-N_t = zeros(Float64, time_max, age_max)
 AF = zeros(Float64, time_max, age_max)
 CF = zeros(Float64, time_max, age_max)
 CE = zeros(Float64, time_max, age_max)
 
+N_t = zeros(Float64, time_max)
 AF_t = zeros(Float64, time_max)
 CF_t = zeros(Float64, time_max)
 CE_t = zeros(Float64, time_max)

@@ -2,11 +2,39 @@
 wealth_F = zeros(Float64, (time_max+age_max-1), (age_max))
 consumption_F = zeros(Float64, (time_max+age_max-1), (age_max))
 
+AF = zeros(Float64, time_max, age_max)
+CF = zeros(Float64, time_max, age_max)
+CE = zeros(Float64, time_max, age_max)
+
+N_t = zeros(Float64, time_max)
+AF_t = zeros(Float64, time_max)
+CF_t = zeros(Float64, time_max)
+CE_t = zeros(Float64, time_max)
+KF_t = zeros(Float64, time_max)
+YF_t = zeros(Float64, time_max)
+NF_t = zeros(Float64, time_max)
+NE_N_t = zeros(Float64, time_max)
+IF_t = zeros(Float64, time_max)
+IE_t = zeros(Float64, time_max)
+IF_Y_t = zeros(Float64, time_max)
+I_Y_t = zeros(Float64, time_max)
+Y_N_t = zeros(Float64, time_max)
+SE_YE_t = zeros(Float64, time_max)
+SE_t = zeros(Float64, time_max)
+SF_YF_t = zeros(Float64, time_max)
+IE_Y_t = zeros(Float64, time_max)
+SF_t = zeros(Float64, time_max)
+FA_Y_t = zeros(Float64, time_max)
+BoP_Y_t = zeros(Float64, time_max)
+TFP_t = zeros(Float64, time_max)
+YG_t = zeros(Float64, time_max)
+K_Y_t = zeros(Float64, time_max)
+S_Y_t = zeros(Float64, time_max)
 
 for ii = 2:age_max
     
     # computing existing workers wealth given the guess of  m_t and rho_t
-    result=fun_saving_F_existing([ii,wealth_pre[ii]])
+    result=fun_saving_F_existing([ii,wealth_pre[ii]], dictmain, dictopt)
     wealth = result[:wealth]
     consumption = result[:consumption]    
 
@@ -21,7 +49,7 @@ end # existing workers
 for tt = 1:time_max
         
     # computing workers wealth given the guess of  m_t and rho_t
-    result=fun_saving_F_newly_born([tt])
+    result=fun_saving_F_newly_born([tt], dictmain, dictopt)
     wealth = result[:wealth]
     consumption = result[:consumption]
 
@@ -215,14 +243,14 @@ end_year=2012
 
 r_F=r./(1 .-ice_t)
 
-p1 = plot([1992:2012], r_F(1:21), xlims=(1992, end_year), ylims=(0.0, 0.12), 
+p1 = plot([1992:2012], r_F[1:21], xlims=(1992, end_year), ylims=(0.0, 0.12), 
 xlabel="year", title="Panel 1: rate of return in F firms", 
 color=:blue, linewidth=2)
 
 
-p2 = plot([1992:end_year], NE_N_t(1:end_year-1992+1),
+p2 = plot([1992:end_year], NE_N_t[1:end_year-1992+1],
 title="Panel 2: E firm employment share", 
-label="model"
+label="model",
 xlabel="year",
 xlims=(1992, end_year),
 ylims=(0.0, 0.801),
@@ -231,7 +259,7 @@ plot!(p2, [1998:2007], data_em_sh, color=:red, linewidth=2, label="firm data")
 plot!(p2, [1992:2007], data_em_sh_agg, color=:black, label="aggregate data")
 
 
-p3 = plot([1992:end_year], S_Y_t(1:end_year-1992+1), 
+p3 = plot([1992:end_year], S_Y_t[1:end_year-1992+1], 
 label="model",
 xlabel="year",
 xlims=(1992, end_year),
@@ -241,7 +269,7 @@ color=:blue, linewidth=2)
 plot!(p3, [1992:2007], data_sav, color=:red, label="data")
 
 
-p4 = plot([1992:end_year], I_Y_t(1:end_year-1992+1), 
+p4 = plot([1992:end_year], I_Y_t[1:end_year-1992+1], 
 xlabel="year",
 title="Panel 4: aggregate investment rate",
 xlims=(1992, end_year),
@@ -262,34 +290,23 @@ plot!(p4, [1992:2007], data_inv, color=:red, linewidth=2, label="data")
 # hold off
 
 
-subplot(3,2,5)
-plot([1992:end_year],FA_Y_t(1:end_year-1992+1),'-','color','b','linewidth',2)
-hold on
-plot([1992:2007],data_res,'-.','color','r','linewidth',2)
-hold off
-xlabel('year')
-# legend('model','data')
-title('Panel 5: foreign reserve / GDP')
-axis([1992 end_year 0.0 0.75])
-hold off
+p5 = plot([1992:end_year], FA_Y_t[1:end_year-1992+1], 
+label="model", 
+xlabel="year",
+title="Panel 5: foreign reserve / GDP",
+xlims=(1992, end_year),
+ylims=(0.0, 0.75),
+color=:blue, linewidth=2)
+plot!(p5, [1992:2007], data_res, label="data", color=:red, linewidth=2)
 
-subplot(3,2,6)
-plot([1992:end_year],TFP_t(1:end_year-1992+1)+(1-alp)*g_t,'-','color','b','linewidth',2)
-xlabel('year')
-# legend('model','data')
-title('Panel 6: TFP growth rate')
-axis([1992 end_year 0.0 0.1])
-hold off
+
+p6 = plot([1992:end_year], TFP_t[1:end_year-1992+1] .+(1-alp)*g_t, 
+xlabel="year",
+label="model",
+title="Panel 6: TFP growth rate",
+xlims=(1992, end_year),
+ylims=(0.0, 0.1),
+color=:blue, linewidth=2)
 
 f = plot(p1, p2, p3, p4, p5, p6, layout=(3,2))
 savefig(f, "six_panel.png")
-
-# save data# save data
-r_F_0= r_F
-NE_N_t_0= NE_N_t
-S_Y_t_0= S_Y_t
-I_Y_t_0= I_Y_t
-FA_Y_t_0= FA_Y_t
-TFP_t_0= TFP_t
-
-save data_0 r_F_0 NE_N_t_0 S_Y_t_0 I_Y_t_0 FA_Y_t_0 TFP_t_0

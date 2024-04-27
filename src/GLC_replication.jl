@@ -1,4 +1,4 @@
-module main_parameter
+module GLC_replication
 
 using Statistics 
 using Plots
@@ -7,6 +7,7 @@ using JLD2
 using Statistics 
 using CSV 
 using DataFrames 
+
 
 include("fun_saving_pre_transition.jl") 
 
@@ -31,6 +32,9 @@ import .fun_saving_E_new_born: fun_saving_E_newly_born
 import .fun_saving_F_exis: fun_saving_F_existing
 
 import .fun_saving_F_new_born: fun_saving_F_newly_born
+
+
+function glc_replicate()
 
 #parameter without calibration
 bet=0.998; #discount factor of workers
@@ -121,4 +125,6 @@ include("result.jl")
 
 include("six_panel.jl")
 
-end #End of module main_parameter
+end 
+
+end #End of module GLC_replication

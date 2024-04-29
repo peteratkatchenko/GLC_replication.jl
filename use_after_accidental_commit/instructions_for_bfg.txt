@@ -1,0 +1,21 @@
+# Herein lie the instructions for implementing the BFG repo cleaner whenever you accidentally
+commit/push an unintended file or a file that is too large for the remote repository
+
+# First, we must repack the repository; go to the directory/project environment folder containing the 
+.git repository and pass the following command
+
+git gc
+
+# Second, we must pass the BFG command itself; it is as follows
+
+java -jar bfg-1.14.0.jar --strip-blobs-bigger-than 100M .
+
+    # The size of the minimal file can be changed from 100 M and (.) 
+    indicates that the .git repository is contained in the present working directory 
+
+# Third, we must pass the following cleanup command 
+
+$ git reflog expire --expire=now --all && git gc --prune=now --aggressive
+
+
+## Now you are done!

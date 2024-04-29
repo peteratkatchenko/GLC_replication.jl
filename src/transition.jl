@@ -11,13 +11,14 @@ iter = 1
 # initial_guess
 
 # true results
-data_result = matread("C:\\Users\\peter\\.julia\\dev\\glc_replication\\replication_package\\data_appendix\\matlab\\matlab\\data_result.mat")
+file_path = joinpath(@__DIR__, "data_result.jld2")
+data_result = load(file_path)
 
 m_t = transpose(data_result["m_t"])
 w_t = transpose(data_result["w_t"])
 rho_t = transpose(data_result["rho_t"])
 dictopt = Dict(:m_t => m_t, :w_t => w_t, :rho_t => rho_t)
-
+    
 wealth_E = zeros(Float64, (time_max+age_max-1), (age_max))
 consumption_E = zeros(Float64, (time_max+age_max-1), (age_max))
 

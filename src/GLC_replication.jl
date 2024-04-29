@@ -1,51 +1,51 @@
 module GLC_replication
 
+export glc_replicate
+
 using Statistics 
 using Plots
 using MAT
 using JLD2
-using Statistics 
 using CSV 
 using DataFrames 
+
+include("fun_saving_pre_transition.jl") 
+
+include("fun_saving_pre_transition_E.jl")
+
+include("fun_saving_E_existing.jl")
+
+include("fun_saving_E_newly_born.jl")
+
+include("fun_saving_F_existing.jl")
+
+include("fun_saving_F_newly_born.jl")
+
+import .fun_saving_pre_trans: fun_saving_pre_transition
+
+import .fun_saving_pre_trans_E: fun_saving_pre_transition_E
+
+import .fun_saving_E_exis: fun_saving_E_existing
+
+import .fun_saving_E_new_born: fun_saving_E_newly_born
+
+import .fun_saving_F_exis: fun_saving_F_existing
+
+import .fun_saving_F_new_born: fun_saving_F_newly_born
 
 
 function glc_replicate()
 
-    include("fun_saving_pre_transition.jl") 
-
-    include("fun_saving_pre_transition_E.jl")
-
-    include("fun_saving_E_existing.jl")
-
-    include("fun_saving_E_newly_born.jl")
-
-    include("fun_saving_F_existing.jl")
-
-    include("fun_saving_F_newly_born.jl")
-
-    import .fun_saving_pre_trans: fun_saving_pre_transition
-
-    import .fun_saving_pre_trans_E: fun_saving_pre_transition_E
-
-    import .fun_saving_E_exis: fun_saving_E_existing
-
-    import .fun_saving_E_new_born: fun_saving_E_newly_born
-
-    import .fun_saving_F_exis: fun_saving_F_existing
-
-    import .fun_saving_F_new_born: fun_saving_F_newly_born
-
-
     #parameter without calibration
-    bet=0.998; #discount factor of workers
-    bet_E=bet; #discount factor of enterpreneurs
-    r=0.0175; #world interest rate
-    sig=0.5; #the inverse of intertemporal substitution
-    alp=0.5; #capital output elasticity
-    del=0.10; #depreciation rate
-    g_n=0.03; #exogenous population growth
-    r_soe_ini=0.093; #initial lending rate for SOEs
-    ice=1-r/(r_soe_ini); #iceburg cost
+    bet=0.998 #discount factor of workers
+    bet_E=bet #discount factor of enterpreneurs
+    r=0.0175 #world interest rate
+    sig=0.5 #the inverse of intertemporal substitution
+    alp=0.5 #capital output elasticity
+    del=0.10 #depreciation rate
+    g_n=0.03 #exogenous population growth
+    r_soe_ini=0.093 #initial lending rate for SOEs
+    ice=1-r/(r_soe_ini) #iceburg cost
 
     #TFP growth
     g_t=0.038; #exogenous TFP growth
@@ -60,21 +60,21 @@ function glc_replicate()
     ksi=(KY_F_E)^(alp/(1-alp))/(1-psi) # productivity ratio of E over F
 
     # bank loan in the E sector
-    loan_asset=1; # loan asset ratio
+    loan_asset=1 # loan asset ratio
     eta=loan_asset*(1+r/(1-ice))/(1+rho_r*r/(1-ice)+(rho_r*r/(1-ice)-r/(1-ice))*loan_asset) # measure of financial frictions
 
 
     # initial asset
-    initial_ratio=0.80;
-    initial_ratio_E=0.33;
+    initial_ratio=0.80
+    initial_ratio_E=0.33
 
     # demographic structure
-    age_max=50; # maximum age
-    age_T=26; # the age when enterpreneurs become firm owners
-    age_T_w=31; # the age when workers retire
-    time_max=400; # the end of the economy
-    n_pre=100; # the initial size of workers
-    e_pre=5; # the initial size of enterpreneurs
+    age_max=50 # maximum age
+    age_T=26 # the age when enterpreneurs become firm owners
+    age_T_w=31 # the age when workers retire
+    time_max=400 # the end of the economy
+    n_pre=100 # the initial size of workers
+    e_pre=5 # the initial size of enterpreneurs
 
     #computing demographic structure
     n_weight = zeros(Float64, age_max)

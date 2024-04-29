@@ -115,13 +115,13 @@ function glc_replicate()
     :eta => eta, :loan_asset => loan_asset)
 
 
-    include("./pre_transition.jl")
+    include("pre_transition.jl")
 
-    include("./transition.jl")
+    include("transition.jl")
 
-    include("./result.jl")           
+    include("result.jl")           
 
-    include("./six_panel.jl")
+    include("six_panel.jl")
 
 end 
 

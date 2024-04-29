@@ -115,13 +115,21 @@ function glc_replicate()
     :eta => eta, :loan_asset => loan_asset)
 
 
-    include("pre_transition.jl")
+    file_path1 = joinpath(@__DIR__, "pre_transition.jl")
 
-    include("transition.jl")
+    file_path2 = joinpath(@__DIR__, "transition.jl")
 
-    include("result.jl")           
+    file_path3 = joinpath(@__DIR__, "result.jl")
 
-    include("six_panel.jl")
+    file_path4 = joinpath(@__DIR__, "six_panel.jl")
+
+    include(file_path1)
+
+    include(file_path2)
+
+    include(file_path3)           
+
+    include(file_path4)
 
 end 
 

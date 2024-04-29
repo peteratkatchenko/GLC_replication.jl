@@ -41,7 +41,9 @@ Following execution of the 'glc_replicate()' function in the Julia REPL, the fil
 - **Purpose**: Calculates the aggregate variables which are then graphed in the six-panel replication of 'Figure 8. Transition in the Calibrated Economy'
 
 ## Figures Produced by the Replication
+
 **Six-Panel from Replication**：
+
 ![Replication of the result](assets/img/six_panel.png)
 
 **Six-Panel from Publication**: 

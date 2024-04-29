@@ -45,7 +45,7 @@ Following execution of the 'glc_replicate()' function in the Julia REPL, the fil
 ![Replication of the result](assets/img/six_panel.png)
 
 **Six-Panel from Publication**: 
-[Replication of the result](assets/img/paper_six_panel.png)
+![Replication of the result](assets/img/paper_six_panel.png)
 
 **Figures 1-8**:
 ![Replication of the result](assets/img/figure_1.png)
@@ -60,9 +60,13 @@ Following execution of the 'glc_replicate()' function in the Julia REPL, the fil
 # Comparison
 ![Replication of the result](assets/img/six_panel.png "Replication")
 ![Transition in the Calibrated Economy](assets/img/paper_six_panels_2.png "The publication's result")
+
+
 As can be seen, the replicated results exactly match the results presented in the publication. This figure depicts the evolution of key variables during the Chinese economic transition. The solid and dashed lines in the figure represent the simulation results of the model and the actual data, respectively. Panel 1 identifies a gradual decrease in the rate of return of F firms due to financial development - the publication identifies this as an implication of the calibrated model that cannot be reconciled with the empirical evidence that suggests the presence of increasing rates of return during this period. Panel 2 shows the gradual increase in the E firm employment share as labour reallocated away from F firms and towards E firms during the transition.Panel 3 shows the increase in the aggregate savings rate that accomanies the increase in entrepreneurial profits over the course of the transition. Panel 4 shows the gradual increase and then decrease in the aggregate savings rate, as sectoral reallocation towards E firms stimulates investment on the part of the entrepreneurs, which leads to capital deepening and the gradual extinguishing of returns to investment. Panel 5 shows the gradual increase in foreign reserves, as banks reorient their portfolios towards foreign bonds in light of the exit of F firms during the transition. Panel 6 captures the increase in aggregate productivity that accompanies the reallocation of factors of production towards more productive E firms during the transition.
 
 ![Replication of the result](assets/img/figure_1.png "what we replicate")
+
+
 This figure shows the evolution of key economic variables during and after the Chinese economic transition. Panels a, b, and c demonstrate the increase in aggregate output, employment and wage rate which accompany the growth of the Chinese economy during the period of structural change. Panel d demonstrates the gradual decrease in the rate of return to capital as sectoral reallocation stimulates capital deepening in E firms over time. Panel e demonstrates the initial drop and then increase in investment that accompanies the gradual shift towards E firm dominance, as well as the gradual increase in savings as entrepreneurial profits grow over the course of the transition. Panel f demonstrates the initial fall in the capital-output ratio as the economy shifts towards labor-intensive E firms, followed by an increase in the capital-output ratio as capital deepening takes hold in the same E firms. Panel g demonstrates the gradual increase in foreign reserves that occurs as banks shift their portfolios towards foreign bonds as a response to the gradual exit of favoured F firms during the transition. Panel h demonstrates how TFP growth peaks during the height of sectoral reallocation and then drops to zero as the transition is completed and the economy settles into an E firm-dominated steady-state.
 
 ## Want to Execute the Code Manually?

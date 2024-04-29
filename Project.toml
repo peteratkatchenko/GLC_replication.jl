@@ -1,4 +1,4 @@
-name = "glc_replication"
+name = "GLC_replication"
 uuid = "51fab317-7a90-40bb-b5c5-aa40c430eb1b"
 authors = ["Peter Tkatchenko <peteratkatchenko@gmail.com>"]
 version = "0.1.0"

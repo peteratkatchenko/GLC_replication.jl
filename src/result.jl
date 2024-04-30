@@ -210,7 +210,9 @@ time_begin=1
 time_end=100
 tt=[time_begin:time_end]
 
-f1p1 = plot(tt, Y_N_t[time_begin:time_end], title="panel a: aggregate output per capita", linewidth=2, color=:red)
+f1p1 = plot(tt, Y_N_t[time_begin:time_end], title="panel a: aggregate output per capita", 
+titlefontsize=8,
+linewidth=2, color=:red)
 
 # subplot(4,2,2)
 # plot(tt,NE_t(time_begin:time_end),'r','linewidth',2)
@@ -222,9 +224,13 @@ f1p1 = plot(tt, Y_N_t[time_begin:time_end], title="panel a: aggregate output per
 # 
 # hold off
 
-f1p2 = plot(tt, NE_N_t[time_begin:time_end], title="panel b: private employment share", linewidth=2, color=:red)
+f1p2 = plot(tt, NE_N_t[time_begin:time_end], title="panel b: private employment share", 
+titlefontsize=10,
+linewidth=2, color=:red)
 
-f1p3 = plot(tt, w_t[time_begin:time_end], title="panel c: wage rate", linewidth=2, color=:red)
+f1p3 = plot(tt, w_t[time_begin:time_end], title="panel c: wage rate", 
+titefontsize=8,
+linewidth=2, color=:red)
 
 # plot(tt,m_t(time_begin:time_end),'r','linewidth',2)
 # # gtext('managerial compensations')
@@ -232,7 +238,9 @@ f1p3 = plot(tt, w_t[time_begin:time_end], title="panel c: wage rate", linewidth=
 # gtext('wage rate')
 # title('panel c: income inequality')
 
-f1p4 = plot(tt, rho_t[time_begin:time_end], title="panel d: rate of return to capital", linewidth=2, color=:red)
+f1p4 = plot(tt, rho_t[time_begin:time_end], title="panel d: rate of return to capital", 
+titefontsize=8,
+linewidth=2, color=:red)
 
 # gtext('the rate of returns for entrepreneurs')
 #r_t(time_begin:time_end)=r
@@ -241,13 +249,19 @@ f1p4 = plot(tt, rho_t[time_begin:time_end], title="panel d: rate of return to ca
 
 subplot = plot(tt, I_Y_t[time_begin:time_end], label="I/Y", color=:red, linewidth=2)
 plot!(subplot, tt, S_Y_t[time_begin:time_end], label="S/Y", color=:black, linewidth=2)
-f1p5 = plot!(subplot, title="panel e: the aggregate investment and saving rates")
+f1p5 = plot!(subplot, title="panel e: the aggregate investment and saving rates", titefontsize=8,)
 
-f1p6 = plot(tt, K_Y_t[time_begin:time_end], title="panel f: the aggregate capital output ratio", linewidth=2, color=:red)
+f1p6 = plot(tt, K_Y_t[time_begin:time_end], title="panel f: the aggregate capital output ratio", 
+titefontsize=8,
+linewidth=2, color=:red)
 
-f1p7 = plot(tt, FA_Y_t[time_begin:time_end], title="panel h: foreign reserves output ratio", linewidth=2, color=:red)
+f1p7 = plot(tt, FA_Y_t[time_begin:time_end], title="panel h: foreign reserves output ratio", 
+titefontsize=8,
+linewidth=2, color=:red)
 
-f1p8 = plot(tt, TFP_t[time_begin:time_end], title="panel h: TFP growth rate", linewidth=2, color=:red)
+f1p8 = plot(tt, TFP_t[time_begin:time_end], title="panel h: TFP growth rate", 
+titefontsize=8,
+linewidth=2, color=:red)
 
 f1 = plot(f1p1, f1p2, f1p3, f1p4, f1p5, f1p6, f1p7, f1p8, layout=(4,2))
 

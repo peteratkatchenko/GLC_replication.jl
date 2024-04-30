@@ -229,7 +229,7 @@ titlefontsize=8,
 linewidth=2, color=:red)
 
 f1p3 = plot(tt, w_t[time_begin:time_end], title="panel c: wage rate", 
-titefontsize=8,
+titlefontsize=8,
 linewidth=2, color=:red)
 
 # plot(tt,m_t(time_begin:time_end),'r','linewidth',2)
@@ -239,7 +239,7 @@ linewidth=2, color=:red)
 # title('panel c: income inequality')
 
 f1p4 = plot(tt, rho_t[time_begin:time_end], title="panel d: rate of return to capital", 
-titefontsize=8,
+titlefontsize=8,
 linewidth=2, color=:red)
 
 # gtext('the rate of returns for entrepreneurs')
@@ -252,15 +252,15 @@ plot!(subplot, tt, S_Y_t[time_begin:time_end], label="S/Y", color=:black, linewi
 f1p5 = plot!(subplot, title="panel e: the aggregate investment and saving rates", titefontsize=8,)
 
 f1p6 = plot(tt, K_Y_t[time_begin:time_end], title="panel f: the aggregate capital output ratio", 
-titefontsize=8,
+titlefontsize=8,
 linewidth=2, color=:red)
 
 f1p7 = plot(tt, FA_Y_t[time_begin:time_end], title="panel h: foreign reserves output ratio", 
-titefontsize=8,
+titlefontsize=8,
 linewidth=2, color=:red)
 
 f1p8 = plot(tt, TFP_t[time_begin:time_end], title="panel h: TFP growth rate", 
-titefontsize=8,
+titlefontsize=8,
 linewidth=2, color=:red)
 
 f1 = plot(f1p1, f1p2, f1p3, f1p4, f1p5, f1p6, f1p7, f1p8, layout=(4,2))

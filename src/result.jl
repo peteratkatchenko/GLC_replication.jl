@@ -225,7 +225,7 @@ linewidth=2, color=:red)
 # hold off
 
 f1p2 = plot(tt, NE_N_t[time_begin:time_end], title="panel b: private employment share", 
-titlefontsize=10,
+titlefontsize=8,
 linewidth=2, color=:red)
 
 f1p3 = plot(tt, w_t[time_begin:time_end], title="panel c: wage rate", 

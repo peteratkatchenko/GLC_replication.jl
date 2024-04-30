@@ -244,12 +244,12 @@ end_year=2012
 r_F=r./(1 .-ice_t)
 
 p1 = plot([1992:2012], r_F[1:21], xlims=(1992, end_year), ylims=(0.0, 0.12), 
-xlabel="year", title="Panel 1: rate of return in F firms", 
+xlabel="year", title="Panel 1: rate of return in F firms", titlefontsize=8,
 color=:blue, linewidth=2)
 
 
 p2 = plot([1992:end_year], NE_N_t[1:end_year-1992+1],
-title="Panel 2: E firm employment share", 
+title="Panel 2: E firm employment share",  titlefontsize=8,
 label="model",
 xlabel="year",
 xlims=(1992, end_year),
@@ -264,14 +264,14 @@ label="model",
 xlabel="year",
 xlims=(1992, end_year),
 ylims=(0.35, 0.601),
-title="Panel 3: aggregate saving rate",
+title="Panel 3: aggregate saving rate", titlefontsize=8,
 color=:blue, linewidth=2)
 plot!(p3, [1992:2007], data_sav, color=:red, label="data")
 
 
 p4 = plot([1992:end_year], I_Y_t[1:end_year-1992+1], 
 xlabel="year",
-title="Panel 4: aggregate investment rate",
+title="Panel 4: aggregate investment rate", titlefontsize=8,
 xlims=(1992, end_year),
 ylims=(0.30, 0.45),
 color=:blue, linewidth=2)
@@ -293,7 +293,7 @@ plot!(p4, [1992:2007], data_inv, color=:red, linewidth=2, label="data")
 p5 = plot([1992:end_year], FA_Y_t[1:end_year-1992+1], 
 label="model", 
 xlabel="year",
-title="Panel 5: foreign reserve / GDP",
+title="Panel 5: foreign reserve / GDP", titlefontsize=8,
 xlims=(1992, end_year),
 ylims=(0.0, 0.75),
 color=:blue, linewidth=2)
@@ -303,7 +303,7 @@ plot!(p5, [1992:2007], data_res, label="data", color=:red, linewidth=2)
 p6 = plot([1992:end_year], TFP_t[1:end_year-1992+1] .+(1-alp)*g_t, 
 xlabel="year",
 label="model",
-title="Panel 6: TFP growth rate",
+title="Panel 6: TFP growth rate", titlefontsize=8,
 xlims=(1992, end_year),
 ylims=(0.0, 0.1),
 color=:blue, linewidth=2)

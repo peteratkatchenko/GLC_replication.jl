@@ -249,7 +249,7 @@ linewidth=2, color=:red)
 
 subplot = plot(tt, I_Y_t[time_begin:time_end], label="I/Y", color=:red, linewidth=2)
 plot!(subplot, tt, S_Y_t[time_begin:time_end], label="S/Y", color=:black, linewidth=2)
-f1p5 = plot!(subplot, title="panel e: the aggregate investment and saving rates", titefontsize=8,)
+f1p5 = plot!(subplot, title="panel e: the aggregate investment and saving rates", titlefontsize=8,)
 
 f1p6 = plot(tt, K_Y_t[time_begin:time_end], title="panel f: the aggregate capital output ratio", 
 titlefontsize=8,

@@ -10,13 +10,13 @@ This package, most importantly, reproduces the six-panel 'Figure 8. Transition i
 - Step 5: Enter the following command into the Julia REPL:
     'using GLC_replication'
 - Step 6: Execute the following command:
-    'glc_replicate()'
+    'glc_replicate()'.
 Following execution of the 'glc_replicate()' function in the Julia REPL, the file path that leads to the directory containing the resulting images will be printed. Open the indicated directory on your machine and enjoy the beautiful graphs! 
 
 ## Breakdown of the Constituent Scripts
 
 ### `GLC_replication.jl`
-- **Purpose**: Initializes the basic parameters of the economic model as global variables and executes the entire replication process. The script defines the exogenously-determined parameters, calculates the calibration targets and the parameters determining TFP growth, the operation of the banking sector, the evoluation of the demographic structure, and the change in the iceburg cost. All remaining files are executed from this module.
+- **Purpose**: Initializes the basic parameters of the economic model as global variables and executes the entire replication process. The script defines the exogenously-determined parameters, calculates the calibration targets and the parameters determining TFP growth, the operation of the banking sector, the evolution of the demographic structure, and the change in the iceburg cost. All remaining files are executed from this module.
 
 ### `pre_transition.jl`
 - **Purpose**: Applies two functions in calculating the wealth, savings and consumption of workers and entrepreneurs in the pre-transition state of the baseline model. Generates variables for workers and entrepreneurs which will be used to calculate the optimal decision of the consumers during the transition period.
@@ -74,5 +74,5 @@ This figure shows the evolution of key economic variables during and after the C
 ## Want to Execute the Code Manually?
 - Step 1: Download the package files to a common directory 
 - Step 2: Open the file called 'GLC_replication.jl'
-- Step 3: Remove the function wrapper for 'glc_replicate'
+- Step 3: Remove the function wrapper for 'glc_replicate()'
 - Step 4: Execute 'GLC_replication.jl' - this module will automatically call all other files in the package and generate the appropriate images
